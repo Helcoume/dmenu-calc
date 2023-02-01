@@ -5,22 +5,27 @@ get_history() {
     [[ ! -s $1 ]] && echo "No history found" || tac $history_file
 }
 
+is_in_history() { grep -q -F "$1" $2; }
+
+add_to_history() { echo "$1" >> $2; }
+
+copy_to_clipboard() { printf $1 | xclip -sel clip; }
+
+result_from_equation() { printf "$1" | sed 's/^.*\(=\|≈\) //'; }
+
 main() {
     history_file="$HOME/.local/share/dmenu-calc/history"
     dmenu_cmd="dmenu -i -l 10 -p"
 
     input=$(get_history $history_file | ${dmenu_cmd} "Calculator: " "$@") 
-    [[ $input == "" ]] && exit
+    [[ $input == "" ]] && exit # occure when Escape is press (quit)
 
-    if grep -q -F "$input" $history_file; then
-        equation="$input"
-        result="$(printf "$input" | sed 's/^.*\(=\|≈\) //')"
-    else
-        equation="$(qalc "$input")"
-        result="$(qalc -t "$input")"
-    fi
-    echo "$equation" >> ${history_file}
-    printf "$result" | xclip -sel clip
+    equation=$( is_in_history "$input" $history_file && echo "$input" || echo "$(qalc $input)" )
+
+    add_to_history "$equation" $history_file
+    copy_to_clipboard $(result_from_equation "$equation")
+
     main "$@"
 }
+
 main "$@"
