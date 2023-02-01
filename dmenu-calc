@@ -1,0 +1,20 @@
+#!/bin/bash
+
+get_history() {
+    [[ ! -f $1 ]] && mkdir -p $(dirname $1) && touch $1
+    [[ ! -s $1 ]] && echo "No history found" || tac $history_file
+}
+
+main() {
+    history_file="$HOME/.local/share/dmenu-calc/history"
+    dmenu_cmd="dmenu -i -l 10 -p"
+
+    input=$(get_history $history_file | ${dmenu_cmd} "Calculator: " "$@") 
+    if [[ $input == "" ]]; then
+        exit
+    else
+        echo $(qalc "$input") >> ${history_file}
+        main "$@"
+    fi
+}
+main "$@"
