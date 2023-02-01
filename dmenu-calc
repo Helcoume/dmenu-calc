@@ -10,12 +10,17 @@ main() {
     dmenu_cmd="dmenu -i -l 10 -p"
 
     input=$(get_history $history_file | ${dmenu_cmd} "Calculator: " "$@") 
-    if [[ $input == "" ]]; then
-        exit
+    [[ $input == "" ]] && exit
+
+    if grep -q -F "$input" $history_file; then
+        equation="$input"
+        result="$(printf "$input" | sed 's/^.*\(=\|≈\) //')"
     else
-        echo $(qalc "$input") >> ${history_file}
-        printf $(qalc -t "$input") | xclip -sel clip
-        main "$@"
+        equation="$(qalc "$input")"
+        result="$(qalc -t "$input")"
     fi
+    echo "$equation" >> ${history_file}
+    printf "$result" | xclip -sel clip
+    main "$@"
 }
 main "$@"
