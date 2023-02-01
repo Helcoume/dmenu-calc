@@ -14,6 +14,7 @@ main() {
         exit
     else
         echo $(qalc "$input") >> ${history_file}
+        printf $(qalc -t "$input") | xclip -sel clip
         main "$@"
     fi
 }
