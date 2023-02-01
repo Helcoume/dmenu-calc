@@ -7,7 +7,7 @@ get_history() {
     [[ ! -s $history_file ]] && echo "No history found" || tac $history_file
 }
 
-is_in_history() { grep -q -F "$1" $history_file; }
+is_in_history() { grep -q -x -F "$1" $history_file; }
 
 add_to_history() { echo "$1" >> $history_file; }
 
