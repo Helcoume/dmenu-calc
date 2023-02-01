@@ -1,28 +1,29 @@
 #!/bin/bash
 
+history_file="$HOME/.local/share/dmenu-calc/history"
+
 get_history() {
-    [[ ! -f $1 ]] && mkdir -p $(dirname $1) && touch $1
-    [[ ! -s $1 ]] && echo "No history found" || tac $history_file
+    [[ ! -f $history_file ]] && mkdir -p $(dirname $history_file) && touch $history_file
+    [[ ! -s $history_file ]] && echo "No history found" || tac $history_file
 }
 
-is_in_history() { grep -q -F "$1" $2; }
+is_in_history() { grep -q -F "$1" $history_file; }
 
-add_to_history() { echo "$1" >> $2; }
+add_to_history() { echo "$1" >> $history_file; }
 
 copy_to_clipboard() { printf "$1" | xclip -sel clip; }
 
 result_from_equation() { printf "$1" | sed 's/^.*\(=\|≈\) //'; }
 
 main() {
-    history_file="$HOME/.local/share/dmenu-calc/history"
     dmenu_cmd="dmenu -i -l 10 -p"
 
-    input=$(get_history $history_file | ${dmenu_cmd} "Calculator: " "$@") 
+    input=$(get_history | ${dmenu_cmd} "Calculator: " "$@") 
     [[ $input == "" ]] && exit # occure when Escape is press (quit)
 
-    equation=$( is_in_history "$input" $history_file && echo "$input" || echo "$(qalc $input)" )
+    equation=$( is_in_history "$input" && echo "$input" || echo "$(qalc $input)" )
 
-    add_to_history "$equation" $history_file
+    add_to_history "$equation"
     copy_to_clipboard $(result_from_equation "$equation")
 
     main "$@"
