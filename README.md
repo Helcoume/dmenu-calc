@@ -5,7 +5,9 @@ A simple dmenu calculator using `qalc`, inspired by [svenstraro's rofi-calc](htt
 
 ![exemple](exemple.gif)
 
-exemple use `dmenu-calc -c` (`-c` is from dmenu [center](https://tools.suckless.org/dmenu/patches/center/) patch) 
+Exemple use `dmenu-calc -c` (`-c` is from dmenu [center](https://tools.suckless.org/dmenu/patches/center/) patch) 
+
+The history is store in `$HOME/.local/share/dmenu-calc/history`. It is deletable (and editable if needed). To make it non-persistent, the path (`history_file`) can be changed to `/tmp/dmenu-calc/history` in the script.
 
 # Dependencies
 
