@@ -3,6 +3,10 @@ A simple dmenu calculator using `qalc`, inspired by [svenstraro's rofi-calc](htt
 
 [Qalculate](https://qalculate.github.io/) (qalc) is a powerful and easy to use calculator supporting complex math, many units, conversions and more...
 
+![exemple](exemple.gif)
+
+exemple use `dmenu-calc -c` (`-c` is from dmenu [center](https://tools.suckless.org/dmenu/patches/center/) patch) 
+
 # Dependencies
 
 - [qalc](https://github.com/Qalculate/libqalculate)
