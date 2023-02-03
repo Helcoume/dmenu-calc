@@ -28,8 +28,17 @@ ln -s dmenu-calc/dmenu-calc /path/to/bin
 Run the script with `./dmenu-calc` or `dmenu-calc` if you added it to your path.
 
 - \<Shift-Enter\> : show the result of the current entry and copies it to the clipboard
-- \<Enter\>       : copy the selected history entry to the clipboard and exit
-- \<Tab\>         : copy the selected history to the entry
+- \<Enter\>       : copy the selected history entry to the clipboard
+- \<Tab\>         : copy the selected history to the current entry
 - \<Escape\>      : quit 
 
+If no history entry matches the current entry, \<Enter\> has the behavior of \<Shift-Enter\>.
+
 Any dmenu arguments can be used (even patch ones)
+The args `-i -l 10` are given by default, it can be change by editing the `dmenu_cmd` string.
+
+# TODO
+
+- Possiblility to overwrite the default args
+- -h help
+- Quit on \<Shift-Return\> and show + copy on \<Ctrl-Retrun\> (dmenu default behavior)
