@@ -18,15 +18,15 @@ result_from_equation() { printf "$1" | sed 's/^.*\(=\|≈\) //'; }
 main() {
     dmenu_cmd="dmenu -l 10 -p"
 
-    input=$(get_history | ${dmenu_cmd} "Calculator: " "$@") 
-    [[ $input == "" ]] && exit # occure when Escape is press (quit)
+    while
+        input=$(get_history | ${dmenu_cmd} "Calculator: " "$@")
+        [[ -n $input ]] # quit == no input
+    do
+        equation=$( is_in_history "$input" && echo "$input" || echo "$(qalc $input)" )
 
-    equation=$( is_in_history "$input" && echo "$input" || echo "$(qalc $input)" )
-
-    add_to_history "$equation"
-    copy_to_clipboard $(result_from_equation "$equation")
-
-    main "$@"
+        add_to_history "$equation"
+        copy_to_clipboard $(result_from_equation "$equation")
+    done
 }
 
 main "$@"
