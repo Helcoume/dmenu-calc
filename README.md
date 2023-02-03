@@ -35,6 +35,7 @@ Run the script with `./dmenu-calc` or `dmenu-calc` if you added it to your path.
 If no history entry matches the current entry, \<Enter\> has the behavior of \<Shift-Enter\>.
 
 Any dmenu arguments can be used (even patch ones)
+
 The args `-i -l 10` are given by default, it can be change by editing the `dmenu_cmd` string.
 
 # TODO
