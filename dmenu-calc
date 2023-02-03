@@ -16,7 +16,7 @@ copy_to_clipboard() { printf "$1" | xclip -sel clip; }
 result_from_equation() { printf "$1" | sed 's/^.*\(=\|≈\) //'; }
 
 main() {
-    dmenu_cmd="dmenu -i -l 10 -p"
+    dmenu_cmd="dmenu -l 10 -p"
 
     input=$(get_history | ${dmenu_cmd} "Calculator: " "$@") 
     [[ $input == "" ]] && exit # occure when Escape is press (quit)

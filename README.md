@@ -36,10 +36,8 @@ If no history entry matches the current entry, \<Enter\> has the behavior of \<S
 
 Any dmenu arguments can be used (even patch ones)
 
-The args `-i -l 10` are given by default, it can be change by editing the `dmenu_cmd` string.
+The arg `-l 10` is given by default, it can be overwritten. For example `dmenu-calc -l 2` to display only 2 lines of history.
 
 # TODO
 
-- Possiblility to overwrite the default args
-- -h help
 - Quit on \<Shift-Return\> and show + copy on \<Ctrl-Retrun\> (dmenu default behavior)
