@@ -9,7 +9,7 @@ get_history() {
 
 is_in_history() { grep -q -x -F "$1" $history_file; }
 
-add_to_history() { echo "$1" >> $history_file; }
+add_to_history() { is_in_history "$1" || echo "$1" >> $history_file; }
 
 copy_to_clipboard() { printf "$1" | xclip -sel clip; }
 
